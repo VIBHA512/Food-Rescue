@@ -49,7 +49,7 @@ function postFood() {
 db.collection("foods").orderBy("time", "desc")
   .onSnapshot(snapshot => {
     const list = document.getElementById("foodList");
-    list.innerHTML = "";
+    //list.innerHTML = "";
 
     snapshot.forEach(doc => {
       const data = doc.data();
