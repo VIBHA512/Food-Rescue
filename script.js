@@ -54,10 +54,9 @@ db.collection("foods").orderBy("time", "desc")
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
-      li.innerHTML = `
-        ${data.food} | ${data.location} | by ${data.donor}
-        <button onclick="claimFood('${doc.id}')">Claim</button>
-      `;
+      li.innerHTML = `${food.food} | ${food.location} | by ${food.donor}
+<button>Claim</button>`;
+
       list.appendChild(li);
     });
   });
@@ -67,3 +66,9 @@ function claimFood(id) {
   db.collection("foods").doc(id).delete();
   alert("Food claimed!");
 }
+function claimFood(button, location) {
+  button.outerHTML = `<span style="color: green; font-weight: bold;">
+    📍 Location: ${location}
+  </span>`;
+}
+
