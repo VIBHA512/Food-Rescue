@@ -62,10 +62,7 @@ db.collection("foods").orderBy("time", "desc")
   });
 
 // Claim food
-function claimFood(id) {
-  db.collection("foods").doc(id).delete();
-  alert("Food claimed!");
-}
+
 function claimFood(button, location) {
   button.outerHTML = `<span style="color: green; font-weight: bold;">
     📍 Location: ${location}
