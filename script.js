@@ -42,6 +42,12 @@ function postFood() {
     time: firebase.firestore.FieldValue.serverTimestamp()
   });
 
+  // CLEAR INPUTS (optional but nice)
+  document.getElementById("donorName").value = "";
+  document.getElementById("foodDetails").value = "";
+  document.getElementById("location").value = "";
+}
+
   alert("Food posted!");
 }
 
