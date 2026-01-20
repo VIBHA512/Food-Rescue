@@ -42,6 +42,14 @@ function postFood() {
     time: firebase.firestore.FieldValue.serverTimestamp()
   });
 
+  alert("Food posted!");
+
+  document.getElementById("donorName").value = "";
+  document.getElementById("foodDetails").value = "";
+  document.getElementById("location").value = "";
+}
+
+
   // CLEAR INPUTS (optional but nice)
   document.getElementById("donorName").value = "";
   document.getElementById("foodDetails").value = "";
@@ -55,13 +63,16 @@ function postFood() {
 db.collection("foods").orderBy("time", "desc")
   .onSnapshot(snapshot => {
     const list = document.getElementById("foodList");
-    //list.innerHTML = "";
+    list.innerHTML = "";
 
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
-      li.innerHTML = `${food.food} | ${food.location} | by ${food.donor}
-<button>Claim</button>`;
+   li.innerHTML = `
+  ${data.food} | ${data.location} | by ${data.donor}
+  <button onclick="claimFood(this, '${data.location}')">Claim</button>
+`;
+
 
       list.appendChild(li);
     });
