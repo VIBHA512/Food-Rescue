@@ -50,14 +50,7 @@ function postFood() {
 }
 
 
-  // CLEAR INPUTS (optional but nice)
-  document.getElementById("donorName").value = "";
-  document.getElementById("foodDetails").value = "";
-  document.getElementById("location").value = "";
-}
 
-  alert("Food posted!");
-}
 
 // Real-time NGO view
 db.collection("foods").orderBy("time", "desc")
