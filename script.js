@@ -1,11 +1,11 @@
 // 🔥 PASTE YOUR FIREBASE CONFIG HERE
 const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
+  apiKey: "AIzaSyCV3eJ7L9cTcqyzKRn1WP_TDm3QNzBn7QM",
+  authDomain: "food-rescue-124ad.firebaseapp.com",
+  projectId: "food-rescue-124ad",
+  storageBucket: "food-rescue-124ad.firebasestorage.app",
+  messagingSenderId: "591994110578",
+  appId: "1:591994110578:web:ea6ee825ac0e707e9db8eb"
 };
 
 // Initialize Firebase
