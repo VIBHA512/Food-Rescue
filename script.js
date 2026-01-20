@@ -1,60 +1,51 @@
-// 🔥 Firebase config (keep yours)
-const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
-};
+let foods = [];
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Switch Views
-function showDonor() {
-  document.getElementById("donorSection").style.display = "block";
-  document.getElementById("ngoSection").style.display = "none";
-}
-
-function showNGO() {
-  document.getElementById("donorSection").style.display = "none";
-  document.getElementById("ngoSection").style.display = "block";
-}
-
-// Add food (Donor)
-function addFood() {
-  const donor = document.getElementById("donor").value;
-  const food = document.getElementById("food").value;
+function postFood() {
+  const donor = document.getElementById("donorName").value;
+  const food = document.getElementById("foodName").value;
   const location = document.getElementById("location").value;
 
-  db.collection("food_posts").add({
+  if (donor === "" || food === "" || location === "") {
+    alert("Please fill all fields");
+    return;
+  }
+
+  foods.push({
     donor,
     food,
     location,
-    status: "Available",
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    claimed: false
   });
 
-  alert("Food posted successfully!");
+  displayFood();
+
+  document.getElementById("donorName").value = "";
+  document.getElementById("foodName").value = "";
+  document.getElementById("location").value = "";
 }
 
-// Read food (NGO)
-db.collection("food_posts").onSnapshot((snapshot) => {
-  const list = document.getElementById("foodList");
-  list.innerHTML = "";
+function displayFood() {
+  const foodList = document.getElementById("foodList");
+  foodList.innerHTML = "";
 
-  snapshot.forEach((doc) => {
-    const data = doc.data();
+  foods.forEach((item, index) => {
+    const li = document.createElement("li");
 
-    if (data.status === "Available") {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${data.food}</strong><br>
-        📍 ${data.location}<br>
-        👤 ${data.donor}
-      `;
-      list.appendChild(li);
-    }
+    li.innerHTML = `
+      <b>${item.food}</b> | ${item.location} | by ${item.donor}
+      <br>
+      ${
+        item.claimed
+          ? "<span style='color:green;'>✔ Claimed</span>"
+          : `<button onclick="claimFood(${index})">Claim Food</button>`
+      }
+    `;
+
+    foodList.appendChild(li);
   });
-});
+}
+
+function claimFood(index) {
+  foods[index].claimed = true;
+  displayFood();
+}
