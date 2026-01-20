@@ -4,101 +4,137 @@
 }
 
 body {
-  background: linear-gradient(120deg, #f6f9fc, #e9f5ef);
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
   color: #333;
   text-align: center;
 }
 
-/* Header */
+/* ===== HEADER ===== */
 header {
-  background: #1f7a4d;
+  background: linear-gradient(90deg, #2e7d32, #43a047);
   color: white;
-  padding: 20px;
+  padding: 25px 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 header h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 34px;
+  letter-spacing: 1px;
 }
 
 header p {
   margin-top: 6px;
   font-size: 14px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
-/* Buttons */
-button {
-  background: #1f7a4d;
-  color: white;
+/* ===== TOGGLE BUTTONS ===== */
+header button {
+  background: white;
+  color: #2e7d32;
+  font-weight: bold;
   border: none;
-  padding: 10px 16px;
-  margin: 8px;
-  border-radius: 6px;
+  padding: 8px 16px;
+  margin: 12px 6px 0;
+  border-radius: 20px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+header button:hover {
+  background: #c8e6c9;
+}
+
+/* ===== MAIN CARD ===== */
+.container {
+  max-width: 720px;
+  margin: 35px auto;
+  background: white;
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* ===== SECTION HEADINGS ===== */
+h2 {
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+
+/* ===== INPUTS ===== */
+input {
+  width: 85%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #bbb;
   font-size: 14px;
 }
 
+input:focus {
+  outline: none;
+  border-color: #43a047;
+  box-shadow: 0 0 5px rgba(67,160,71,0.5);
+}
+
+/* ===== PRIMARY BUTTON ===== */
+button {
+  background: linear-gradient(90deg, #43a047, #66bb6a);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
 button:hover {
-  background: #155c3a;
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #388e3c, #43a047);
 }
 
-/* Main container */
-.container {
-  max-width: 700px;
-  margin: 30px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-/* Form */
-input {
-  width: 80%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-/* Section titles */
-h2 {
-  color: #1f7a4d;
-  margin-bottom: 10px;
-}
-
-/* Food list */
+/* ===== FOOD LIST ===== */
 ul {
   list-style: none;
   padding: 0;
 }
 
 li {
-  background: #f4f8f6;
-  margin: 10px auto;
-  padding: 12px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #fffde7, #e8f5e9);
+  margin: 12px auto;
+  padding: 14px;
+  border-radius: 12px;
+  width: 92%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 14px;
 }
 
-/* Claim button */
+/* ===== CLAIM BUTTON ===== */
 .claim-btn {
-  background: #ff9800;
+  background: linear-gradient(90deg, #ff9800, #ffb74d);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
 .claim-btn:hover {
-  background: #e68900;
+  background: linear-gradient(90deg, #f57c00, #ff9800);
 }
 
-/* Footer note */
+/* ===== FOOTER ===== */
 footer {
-  margin-top: 20px;
+  margin: 20px 0;
   font-size: 12px;
-  color: #777;
+  color: #555;
 }
