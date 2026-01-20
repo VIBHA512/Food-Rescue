@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Rescue Connect</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>🍱 Food Rescue Connect</h1>
+
+  <h3>Donor Form</h3>
+  <input type="text" id="donor" placeholder="Donor Name"><br><br>
+  <input type="text" id="food" placeholder="Food Details"><br><br>
+  <input type="text" id="location" placeholder="Location"><br><br>
+  <button onclick="addFood()">Post Food</button>
+
+  <h3>Available Food</h3>
+  <ul id="foodList"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
