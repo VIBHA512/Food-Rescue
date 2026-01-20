@@ -1,22 +1,72 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f4f4f4;
+  background: linear-gradient(to right, #f0fdf4, #dcfce7);
+  margin: 0;
+  padding: 0;
 }
 
+/* Header */
+.header {
+  text-align: center;
+  padding: 30px;
+  background-color: #166534;
+  color: white;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.header p {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* Card */
+.card {
+  background: white;
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
 input {
-  padding: 8px;
-  width: 250px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
+/* Button */
 button {
-  padding: 8px 15px;
-  background-color: green;
+  width: 100%;
+  padding: 10px;
+  background-color: #22c55e;
   color: white;
   border: none;
+  border-radius: 6px;
+  font-size: 16px;
   cursor: pointer;
 }
 
-h1 {
-  color: darkgreen;
+button:hover {
+  background-color: #16a34a;
+}
+
+/* Food List */
+ul {
+  padding-left: 20px;
+}
+
+li {
+  background: #f0fdf4;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
 }
