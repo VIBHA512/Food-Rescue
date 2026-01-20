@@ -7,3 +7,13 @@
   margin: 5px;
   width: 150px;
 }
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card{width:400px;
+     margin:20px auto;}
+.role-buttons{
+  margin-top:15px
+}
