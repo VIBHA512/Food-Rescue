@@ -17,3 +17,15 @@ body{
 .role-buttons{
   margin-top:15px
 }
+button {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #27ae60;
+}
