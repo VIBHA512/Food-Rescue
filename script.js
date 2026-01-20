@@ -5,8 +5,8 @@ function postFood() {
   const food = document.getElementById("foodName").value;
   const location = document.getElementById("location").value;
 
-  if (donor === "" || food === "" || location === "") {
-    alert("Please fill all fields");
+  if (!donor || !food || !location) {
+    alert("Fill all fields");
     return;
   }
 
