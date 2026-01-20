@@ -1,3 +1,19 @@
+// 🔥 PASTE YOUR firebaseConfig HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
+  authDomain: "food-rescue-1cfc8.firebaseapp.com",
+  projectId: "food-rescue-1cfc8",
+  storageBucket: "food-rescue-1cfc8.firebasestorage.app",
+  messagingSenderId: "571196450384",
+  appId: "1:571196450384:web:5b316891a8a4e65bd79355"
+};
+
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// View switching
 function showDonor() {
   document.getElementById("donorSection").style.display = "block";
   document.getElementById("ngoSection").style.display = "none";
@@ -8,21 +24,46 @@ function showNGO() {
   document.getElementById("ngoSection").style.display = "block";
 }
 
+// Post food
 function postFood() {
   const name = document.getElementById("donorName").value;
   const food = document.getElementById("foodDetails").value;
   const location = document.getElementById("location").value;
 
   if (!name || !food || !location) {
-    alert("Please fill all fields");
+    alert("Fill all fields");
     return;
   }
 
-  const li = document.createElement("li");
-  li.innerHTML = `${food} | ${location} | by ${name} 
-    <button onclick="this.parentElement.remove()">Claim</button>`;
+  db.collection("foods").add({
+    donor: name,
+    food: food,
+    location: location,
+    time: firebase.firestore.FieldValue.serverTimestamp()
+  });
 
-  document.getElementById("foodList").appendChild(li);
+  alert("Food posted!");
+}
 
-  alert("Food posted successfully!");
+// Real-time NGO view
+db.collection("foods").orderBy("time", "desc")
+  .onSnapshot(snapshot => {
+    const list = document.getElementById("foodList");
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${data.food} | ${data.location} | by ${data.donor}
+        <button onclick="claimFood('${doc.id}')">Claim</button>
+      `;
+      list.appendChild(li);
+    });
+  });
+
+// Claim food
+function claimFood(id) {
+  db.collection("foods").doc(id).delete();
+  alert("Food claimed!");
 }
