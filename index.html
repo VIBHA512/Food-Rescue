@@ -15,12 +15,17 @@
   <!-- Header -->
   <div class="header">
     <h1>🍱 Food Rescue Connect</h1>
-    <p>Connecting surplus food to those in need</p>
+    <p>Connecting surplus food to NGOs in real time</p>
   </div>
 
-  <!-- Main Card -->
-  <div class="card">
+  <!-- Role Selection -->
+  <div class="role-buttons">
+    <button onclick="showDonor()">Donor View</button>
+    <button onclick="showNGO()">NGO View</button>
+  </div>
 
+  <!-- Donor Section -->
+  <div class="card" id="donorSection">
     <h2>Donor Form</h2>
 
     <input type="text" id="donor" placeholder="Donor Name">
@@ -28,10 +33,12 @@
     <input type="text" id="location" placeholder="Location">
 
     <button onclick="addFood()">Post Food</button>
+  </div>
 
-    <h2>Available Food</h2>
+  <!-- NGO Section -->
+  <div class="card" id="ngoSection" style="display:none;">
+    <h2>Available Food (NGO View)</h2>
     <ul id="foodList"></ul>
-
   </div>
 
   <script src="script.js"></script>
