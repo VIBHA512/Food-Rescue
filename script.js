@@ -134,18 +134,6 @@ window.claimFood = function (button, destination, docId) {
     claimedBy: ngoName   // 👈 NEW
   });
 
- window.claimFood = function (button, destination, docId) {
-  const ngoName = document.getElementById("ngoName").value;
-
-  if (!ngoName) {
-    alert("Please enter NGO name first");
-    return;
-  }
-
-  db.collection("foods").doc(docId).update({
-    claimed: true,
-    claimedBy: ngoName
-  });
 };
 
   });
