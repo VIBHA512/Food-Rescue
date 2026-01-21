@@ -124,26 +124,19 @@ window.claimFood = function (button, destination, docId) {
     claimedBy: ngoName   // 👈 NEW
   });
 
-  const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
+ window.claimFood = function (button, destination, docId) {
+  const ngoName = document.getElementById("ngoName").value;
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      const mapUrl =
-        `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${encodeURIComponent(destination)}`;
-
-      button.outerHTML = `
-        <div style="color: green; font-weight: bold;">
-          ✅ Claimed by NGO: <b>${ngoName}</b><br>
-          📍 Estimated Distance: ${estimatedKm} km <br>
-          <a href="${mapUrl}" target="_blank">🗺 Open Route in Google Maps</a>
-        </div>
-      `;
-    });
+  if (!ngoName) {
+    alert("Please enter NGO name first");
+    return;
   }
-}
+
+  db.collection("foods").doc(docId).update({
+    claimed: true,
+    claimedBy: ngoName
+  });
+};
+
   });
 
