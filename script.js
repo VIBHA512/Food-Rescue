@@ -90,7 +90,7 @@ if (data.claimed) {
   `;
 }
 
-      } else {
+      else {
         li.innerHTML = `
           <b>${data.food}</b><br>
           📍 ${data.location}<br>
