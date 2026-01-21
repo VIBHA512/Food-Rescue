@@ -104,12 +104,24 @@ db.collection("foods").orderBy("time", "desc")
 
 // ---------------- CLAIM FOOD ----------------
 function claimFood(button, destination, docId) {
-  db.collection("foods").doc(docId).update({ claimed: true });
+
+  const ngoName = document.getElementById("ngoName").value;
+
+  if (!ngoName) {
+    alert("Please enter NGO name first");
+    return;
+  }
+
+  db.collection("foods").doc(docId).update({
+    claimed: true,
+    claimedBy: ngoName   // 👈 NEW
+  });
 
   const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
+
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
@@ -118,7 +130,7 @@ function claimFood(button, destination, docId) {
 
       button.outerHTML = `
         <div style="color: green; font-weight: bold;">
-          ✅ Claimed by NGO <br>
+          ✅ Claimed by NGO: <b>${ngoName}</b><br>
           📍 Estimated Distance: ${estimatedKm} km <br>
           <a href="${mapUrl}" target="_blank">🗺 Open Route in Google Maps</a>
         </div>
