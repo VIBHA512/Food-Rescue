@@ -98,7 +98,10 @@ if (data.claimed) {
     <b>${data.food}</b><br>
     📍 ${data.location}<br>
     by ${data.donor}<br>
-    <button onclick="claimFood('${doc.id}')">Claim</button>
+    <button onclick="claimFood(this, '${data.location}', '${doc.id}')">
+  Claim
+</button>
+
   `;
 }
 
