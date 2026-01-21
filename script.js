@@ -112,12 +112,17 @@ list.appendChild(li);
   });
 
 // Claim food
-function claimFood(button, destination) {
-  // Simple estimated distance (1–10 km)
+function claimFood(button, destination, docId) {
+
+  db.collection("foods").doc(docId).update({
+    claimed: true
+  });
+
   const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
+
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
@@ -126,13 +131,15 @@ function claimFood(button, destination) {
 
       button.outerHTML = `
         <div style="color: green; font-weight: bold;">
-          📏 Estimated Distance: ~${estimatedKm} km<br>
-          <a href="${mapUrl}" target="_blank">📍 Open Route in Google Maps</a>
+          ✅ Claimed by NGO <br>
+          📍 Estimated Distance: ${estimatedKm} km <br>
+          <a href="${mapUrl}" target="_blank">🗺 Open Route in Google Maps</a>
         </div>
       `;
     });
   }
 }
+
 
 //camera
 document.getElementById("foodImage").addEventListener("change", function () {
