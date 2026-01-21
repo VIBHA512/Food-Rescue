@@ -94,13 +94,16 @@ if (data.claimed) {
 
     <span style="color: green; font-weight: bold;">
       ✔ Claimed by NGO: ${data.claimedBy}
-    </span><br><br>
+    </span><br>
+
+    📏 Estimated Distance: <b>${data.distance} km</b><br><br>
 
     <a href="${mapUrl}" target="_blank">
       🗺 Open Location in Google Maps
     </a>
   `;
 }
+
 
 
       else {
@@ -129,36 +132,14 @@ window.claimFood = function (button, destination, docId) {
     return;
   }
 
-  // Mark as claimed in Firebase
-  db.collection("foods").doc(docId).update({
-    claimed: true,
-    claimedBy: ngoName
-  });
-
-  // Fake estimated distance (demo purpose)
+  // Demo distance (hackathon-safe)
   const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      const mapUrl =
-        `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${encodeURIComponent(destination)}`;
-
-      // Replace button with info
-      button.outerHTML = `
-        <div style="color: green; font-weight: bold;">
-          ✅ Claimed by NGO: <b>${ngoName}</b><br>
-          📏 Estimated Distance: ${estimatedKm} km <br>
-          <a href="${mapUrl}" target="_blank">
-            🗺 Open Route in Google Maps
-          </a>
-        </div>
-      `;
-    });
-  }
+  db.collection("foods").doc(docId).update({
+    claimed: true,
+    claimedBy: ngoName,
+    distance: estimatedKm   // 👈 STORE IT
+  });
 };
 
 
