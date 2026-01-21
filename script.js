@@ -35,12 +35,17 @@ function postFood() {
     return;
   }
 
-  db.collection("foods").add({
-    donor: name,
-    food: food,
-    location: location,
-    time: firebase.firestore.FieldValue.serverTimestamp()
-  });
+ const imageSelected =
+  document.getElementById("foodImage").files.length > 0;
+
+db.collection("foods").add({
+  donor: name,
+  food: food,
+  location: location,
+  hasImage: imageSelected,
+  time: firebase.firestore.FieldValue.serverTimestamp()
+});
+
 
   alert("Food posted!");
 
