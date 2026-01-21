@@ -56,9 +56,11 @@ db.collection("foods").add({
   donor: name,
   food: food,
   location: location,
-  image: imageData, // 👈 this is important
+  imageUrl: imageUrl || "",
+  claimed: false,   // 👈 ADD THIS
   time: firebase.firestore.FieldValue.serverTimestamp()
 });
+
 
 
   alert("Food posted!");
@@ -80,15 +82,28 @@ db.collection("foods").orderBy("time", "desc")
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
-   li.innerHTML = `
-  <strong>${data.food}</strong> | ${data.location}<br>
-  by ${data.donor}<br><br>
+  const li = document.createElement("li");
 
-  ${data.image ? `<img src="${data.image}" width="200" style="border-radius:10px;">` : ""}
+if (data.claimed) {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    by ${data.donor}<br>
+    <span style="color: green; font-weight: bold;">
+      ✔ Claimed by NGO
+    </span>
+  `;
+} else {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    by ${data.donor}<br>
+    <button onclick="claimFood('${doc.id}')">Claim</button>
+  `;
+}
 
-  <br><br>
-  <button onclick="claimFood(this, '${data.location}')">Claim</button>
-`;
+list.appendChild(li);
+
 
 
 
