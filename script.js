@@ -83,15 +83,25 @@ db.collection("foods").orderBy("time", "desc")
       const li = document.createElement("li");
       
 if (data.claimed) {
+
+  const mapUrl =
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}`;
+
   li.innerHTML = `
     <b>${data.food}</b><br>
     📍 ${data.location}<br>
     by ${data.donor}<br>
+
     <span style="color: green; font-weight: bold;">
       ✔ Claimed by NGO: ${data.claimedBy}
-    </span>
+    </span><br><br>
+
+    <a href="${mapUrl}" target="_blank">
+      🗺 Open Location in Google Maps
+    </a>
   `;
 }
+
 
       else {
         li.innerHTML = `
