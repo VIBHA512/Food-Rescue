@@ -1,4 +1,6 @@
 // 🔥 Firebase Config
+document.addEventListener("DOMContentLoaded", function () {
+
 const firebaseConfig = {
   apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
   authDomain: "food-rescue-1cfc8.firebaseapp.com",
@@ -142,3 +144,5 @@ function claimFood(button, destination, docId) {
     });
   }
 }
+  });
+
