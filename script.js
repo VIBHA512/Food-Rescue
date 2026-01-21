@@ -74,8 +74,13 @@ db.collection("foods").orderBy("time", "desc")
 // Claim food
 
 function claimFood(button, location) {
-  button.outerHTML = `<span style="color: green; font-weight: bold;">
-    📍 Location: ${location}
-  </span>`;
+  const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(location);
+
+  button.outerHTML = `
+    <a href="${mapUrl}" target="_blank" style="color: green; font-weight: bold;">
+      📍 Open Location in Google Maps
+    </a>
+  `;
 }
+
 
