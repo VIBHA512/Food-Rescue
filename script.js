@@ -78,14 +78,18 @@ db.collection("foods").orderBy("time", "desc")
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
+      
+if (data.claimed) {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    by ${data.donor}<br>
+    <span style="color: green; font-weight: bold;">
+      ✔ Claimed by NGO: ${data.claimedBy}
+    </span>
+  `;
+}
 
-      if (data.claimed) {
-        li.innerHTML = `
-          <b>${data.food}</b><br>
-          📍 ${data.location}<br>
-          by ${data.donor}<br>
-          <span style="color: green; font-weight: bold;">✔ Claimed by NGO</span>
-        `;
       } else {
         li.innerHTML = `
           <b>${data.food}</b><br>
