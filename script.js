@@ -68,8 +68,10 @@ db.collection("foods").orderBy("time", "desc")
       const li = document.createElement("li");
    li.innerHTML = `
   ${data.food} | ${data.location} | by ${data.donor}
+  ${data.hasImage ? "📸 Image Available" : ""}
   <button onclick="claimFood(this, '${data.location}')">Claim</button>
 `;
+
 
 
       list.appendChild(li);
