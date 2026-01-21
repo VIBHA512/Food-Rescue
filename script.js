@@ -32,18 +32,19 @@ document.getElementById("foodImage").addEventListener("change", function () {
 });
 
 // ---------------- VIEW SWITCH ----------------
-function showDonor() {
+window.showDonor = function () {
+
   document.getElementById("donorSection").style.display = "block";
   document.getElementById("ngoSection").style.display = "none";
 }
 
-function showNGO() {
+window.showNGO = function () {
   document.getElementById("donorSection").style.display = "none";
   document.getElementById("ngoSection").style.display = "block";
 }
 
 // ---------------- POST FOOD ----------------
-function postFood() {
+window.postFood = function () {
   const name = document.getElementById("donorName").value;
   const food = document.getElementById("foodDetails").value;
   const location = document.getElementById("location").value;
@@ -109,7 +110,7 @@ if (data.claimed) {
   });
 
 // ---------------- CLAIM FOOD ----------------
-function claimFood(button, destination, docId) {
+window.claimFood = function (button, destination, docId) {
 
   const ngoName = document.getElementById("ngoName").value;
 
