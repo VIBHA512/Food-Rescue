@@ -94,6 +94,17 @@ function claimFood(button, destination) {
   }
 }
 
+//camera
+document.getElementById("foodImage").addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const img = document.getElementById("preview");
+    img.src = URL.createObjectURL(file);
+    img.style.display = "block";
+  }
+});
+
+
 
 
 
