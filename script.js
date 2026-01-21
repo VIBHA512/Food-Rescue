@@ -73,14 +73,27 @@ db.collection("foods").orderBy("time", "desc")
 
 // Claim food
 
-function claimFood(button, location) {
-  const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(location);
+function claimFood(button, destination) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
 
-  button.outerHTML = `
-    <a href="${mapUrl}" target="_blank" style="color: green; font-weight: bold;">
-      📍 Open Location in Google Maps
-    </a>
-  `;
+      const mapUrl =
+        `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${encodeURIComponent(destination)}`;
+
+      button.outerHTML = `
+        <a href="${mapUrl}" target="_blank" style="color: green; font-weight: bold;">
+          📍 View Route & Distance on Google Maps
+        </a>
+      `;
+    }, () => {
+      alert("Location permission needed to show distance");
+    });
+  } else {
+    alert("Geolocation not supported");
+  }
 }
+
 
 
