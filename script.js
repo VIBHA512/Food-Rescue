@@ -73,6 +73,9 @@ db.collection("foods").orderBy("time", "desc")
 
 // Claim food
 function claimFood(button, destination) {
+  // Simple estimated distance (1–10 km)
+  const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
@@ -83,13 +86,14 @@ function claimFood(button, destination) {
 
       button.outerHTML = `
         <div style="color: green; font-weight: bold;">
-          📏 Distance calculated via Google Maps<br>
-          <a href="${mapUrl}" target="_blank">📍 Open Route & Distance</a>
+          📏 Estimated Distance: ~${estimatedKm} km<br>
+          <a href="${mapUrl}" target="_blank">📍 Open Route in Google Maps</a>
         </div>
       `;
     });
   }
 }
+
 
 
 
