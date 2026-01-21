@@ -131,10 +131,10 @@ window.claimFood = function (button, destination, docId) {
 
   db.collection("foods").doc(docId).update({
     claimed: true,
-    claimedBy: ngoName   // 👈 NEW
+    claimedBy: ngoName
   });
-
 };
+
 
   });
 
