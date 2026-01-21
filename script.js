@@ -8,6 +8,20 @@ const firebaseConfig = {
   appId: "1:571196450384:web:5b316891a8a4e65bd79355"
 };
 
+let imageData = "";
+document.getElementById("foodImage").addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    imageData = reader.result; // Base64 image
+    document.getElementById("preview").src = imageData;
+    document.getElementById("preview").style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -42,7 +56,7 @@ db.collection("foods").add({
   donor: name,
   food: food,
   location: location,
-  hasImage: imageSelected,
+  image: imageData, // 👈 this is important
   time: firebase.firestore.FieldValue.serverTimestamp()
 });
 
@@ -67,8 +81,12 @@ db.collection("foods").orderBy("time", "desc")
       const data = doc.data();
       const li = document.createElement("li");
    li.innerHTML = `
-  ${data.food} | ${data.location} | by ${data.donor}
-  ${data.hasImage ? "📸 Image Available" : ""}
+  <strong>${data.food}</strong> | ${data.location}<br>
+  by ${data.donor}<br><br>
+
+  ${data.image ? `<img src="${data.image}" width="200" style="border-radius:10px;">` : ""}
+
+  <br><br>
   <button onclick="claimFood(this, '${data.location}')">Claim</button>
 `;
 
