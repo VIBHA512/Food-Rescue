@@ -1,4 +1,4 @@
-// 🔥 PASTE YOUR firebaseConfig HERE
+// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
   authDomain: "food-rescue-1cfc8.firebaseapp.com",
@@ -8,26 +8,28 @@ const firebaseConfig = {
   appId: "1:571196450384:web:5b316891a8a4e65bd79355"
 };
 
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ---------------- IMAGE HANDLING ----------------
 let imageData = "";
+
 document.getElementById("foodImage").addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
 
   const reader = new FileReader();
   reader.onload = function () {
-    imageData = reader.result; // Base64 image
-    document.getElementById("preview").src = imageData;
-    document.getElementById("preview").style.display = "block";
+    imageData = reader.result;
+    const preview = document.getElementById("preview");
+    preview.src = imageData;
+    preview.style.display = "block";
   };
   reader.readAsDataURL(file);
 });
 
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// View switching
+// ---------------- VIEW SWITCH ----------------
 function showDonor() {
   document.getElementById("donorSection").style.display = "block";
   document.getElementById("ngoSection").style.display = "none";
@@ -38,7 +40,7 @@ function showNGO() {
   document.getElementById("ngoSection").style.display = "block";
 }
 
-// Post food
+// ---------------- POST FOOD ----------------
 function postFood() {
   const name = document.getElementById("donorName").value;
   const food = document.getElementById("foodDetails").value;
@@ -49,31 +51,25 @@ function postFood() {
     return;
   }
 
- const imageSelected =
-  document.getElementById("foodImage").files.length > 0;
-
-db.collection("foods").add({
-  donor: name,
-  food: food,
-  location: location,
-  imageUrl: imageUrl || "",
-  claimed: false,   // 👈 ADD THIS
-  time: firebase.firestore.FieldValue.serverTimestamp()
-});
-
-
+  db.collection("foods").add({
+    donor: name,
+    food: food,
+    location: location,
+    image: imageData,
+    claimed: false,
+    time: firebase.firestore.FieldValue.serverTimestamp()
+  });
 
   alert("Food posted!");
 
   document.getElementById("donorName").value = "";
   document.getElementById("foodDetails").value = "";
   document.getElementById("location").value = "";
+  document.getElementById("preview").style.display = "none";
+  imageData = "";
 }
 
-
-
-
-// Real-time NGO view
+// ---------------- NGO VIEW ----------------
 db.collection("foods").orderBy("time", "desc")
   .onSnapshot(snapshot => {
     const list = document.getElementById("foodList");
@@ -82,50 +78,38 @@ db.collection("foods").orderBy("time", "desc")
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
-  const li = document.createElement("li");
 
-if (data.claimed) {
-  li.innerHTML = `
-    <b>${data.food}</b><br>
-    📍 ${data.location}<br>
-    by ${data.donor}<br>
-    <span style="color: green; font-weight: bold;">
-      ✔ Claimed by NGO
-    </span>
-  `;
-} else {
-  li.innerHTML = `
-    <b>${data.food}</b><br>
-    📍 ${data.location}<br>
-    by ${data.donor}<br>
-    <button onclick="claimFood(this, '${data.location}', '${doc.id}')">
-  Claim
-</button>
-
-  `;
-}
-
-list.appendChild(li);
-
-
-
+      if (data.claimed) {
+        li.innerHTML = `
+          <b>${data.food}</b><br>
+          📍 ${data.location}<br>
+          by ${data.donor}<br>
+          <span style="color: green; font-weight: bold;">✔ Claimed by NGO</span>
+        `;
+      } else {
+        li.innerHTML = `
+          <b>${data.food}</b><br>
+          📍 ${data.location}<br>
+          by ${data.donor}<br>
+          ${data.image ? `<img src="${data.image}" width="150"><br>` : ""}
+          <button onclick="claimFood(this, '${data.location}', '${doc.id}')">
+            Claim
+          </button>
+        `;
+      }
 
       list.appendChild(li);
     });
   });
 
-// Claim food
+// ---------------- CLAIM FOOD ----------------
 function claimFood(button, destination, docId) {
-
-  db.collection("foods").doc(docId).update({
-    claimed: true
-  });
+  db.collection("foods").doc(docId).update({ claimed: true });
 
   const estimatedKm = (Math.random() * 9 + 1).toFixed(1);
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
-
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
@@ -142,19 +126,3 @@ function claimFood(button, destination, docId) {
     });
   }
 }
-
-
-//camera
-document.getElementById("foodImage").addEventListener("change", function () {
-  const file = this.files[0];
-  if (file) {
-    const img = document.getElementById("preview");
-    img.src = URL.createObjectURL(file);
-    img.style.display = "block";
-  }
-});
-
-
-
-
-
