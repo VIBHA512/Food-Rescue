@@ -3,89 +3,56 @@
 <head>
   <title>Food Rescue Connect</title>
   <link rel="stylesheet" href="style.css">
-   
 </head>
+
 <body>
 
-  <div class="header">
- 
-  <h1>Food Rescue Connect</h1>
-</div>
-  <p>Connecting surplus food to NGOs in real time</p>
+<div class="container">
+  <h1>🍱 Food Rescue Connect</h1>
+  <p class="subtitle">Connecting surplus food to NGOs in real time</p>
 
-  <div>
+  <div class="switch-buttons">
     <button onclick="showDonor()">Donor View</button>
     <button onclick="showNGO()">NGO View</button>
   </div>
 
-  <!-- Donor Section -->
-  <div id="donorSection">
+  <!-- DONOR SECTION -->
+  <div id="donorSection" class="card">
     <h2>Donor Form</h2>
+
     <input id="donorName" placeholder="Donor Name"><br><br>
     <input id="foodDetails" placeholder="Food Details"><br><br>
-    <input id="location" placeholder="Location"><br><br>
+    <input id="location" placeholder="Location (eg: Connaught Place, Delhi)"><br><br>
 
-     <input type="file" id="foodImage" accept="image/*" capture="environment"><br><br>
-<img id="preview" width="200" style="display:none; border-radius:10px;">
-    
+    <input type="file" id="foodImage" accept="image/*"><br><br>
+    <img id="preview" width="200" style="display:none; border-radius:10px;"><br><br>
+
     <button onclick="postFood()">Post Food</button>
   </div>
 
- 
+  <!-- NGO SECTION -->
+  <div id="ngoSection" class="card" style="display:none;">
+    <h2>NGO Dashboard</h2>
+    <input id="ngoName" placeholder="NGO Name"><br><br>
 
+    <div id="alertBox" class="alert" style="display:none;">
+      🚨 New food just posted nearby!
+    </div>
 
-  <!-- NGO Section -->
-
-
-  <div id="ngoSection" style="display:none;">
-     <input type="text" id="ngoName" placeholder="Enter NGO Name" />
-    <div id="alertBox" style="
-  display:none;
-  background:#ffefd5;
-  color:#333;
-  padding:10px;
-  margin-bottom:10px;
-  border-left:5px solid orange;
-  font-weight:bold;
-">
-  🚨 New food just posted nearby!
-</div>
-
-    <h2>Available Food (NGO View)</h2>
     <ul id="foodList"></ul>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</div>
 
-  <!-- Your JS -->
-  <script src="script.js"></script>
-  <div class="container">
-
-    <h1>🍱 Food Rescue Connect</h1>
-    <p class="subtitle">Connecting surplus food to NGOs in real time</p>
-
-    <div class="switch-buttons">
-      <button onclick="showDonor()">Donor View</button>
-      <button onclick="showNGO()">NGO View</button>
-    </div>
-
-    <!-- Donor Section -->
-    <div id="donorSection" class="card">
-      <!-- donor content -->
-    </div>
-
-    <!-- NGO Section -->
-    <div id="ngoSection" class="card" style="display:none;">
-      <!-- ngo content -->
-    </div>
-
-  </div>
-
-  <footer>
+<footer>
   Prototype MVP • Built for Hackathon
 </footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="script.js"></script>
 
 </body>
 </html>
