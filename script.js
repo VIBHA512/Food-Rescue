@@ -51,35 +51,38 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ---------------- POST FOOD ----------------
-  window.postFood = function () {
-    const name = document.getElementById("donorName").value;
-    const food = document.getElementById("foodDetails").value;
-    const location = document.getElementById("location").value;
+window.postFood = function () {
+  const name = document.getElementById("donorName").value;
+  const food = document.getElementById("foodDetails").value;
+  const location = document.getElementById("location").value;
 
-    if (!name || !food || !location) {
-      alert("Please fill all fields");
-      return;
-    }
+  if (!name || !food || !location) {
+    alert("Fill all fields");
+    return;
+  }
 
-    db.collection("foods").add({
-      donor: name,
-      food: food,
-      location: location,
-      mapLink: getMapLink(location),
-      distance: getEstimatedDistance(),
-      image: imageData,
-      claimed: false,
-      time: firebase.firestore.FieldValue.serverTimestamp()
-    });
+  const now = Date.now();
+  const expiryTime = now + (5 * 60 * 60 * 1000); // 5 hours
 
-    alert("✅ Food posted successfully!");
+  db.collection("foods").add({
+    donor: name,
+    food: food,
+    location: location,
+    image: imageData,
+    claimed: false,
+    postedAt: now,
+    expiresAt: expiryTime
+  });
 
-    document.getElementById("donorName").value = "";
-    document.getElementById("foodDetails").value = "";
-    document.getElementById("location").value = "";
-    document.getElementById("preview").style.display = "none";
-    imageData = "";
-  };
+  alert("Food posted! Valid for 5 hours ⏳");
+
+  document.getElementById("donorName").value = "";
+  document.getElementById("foodDetails").value = "";
+  document.getElementById("location").value = "";
+  document.getElementById("preview").style.display = "none";
+  imageData = "";
+};
+
 
   // ---------------- NGO VIEW ----------------
   let firstLoad = true;
@@ -101,25 +104,49 @@ document.addEventListener("DOMContentLoaded", function () {
       snapshot.forEach(doc => {
         const data = doc.data();
         const li = document.createElement("li");
+        // STEP 2️⃣ — Expiry calculation (5 hours)
+const postedTime = data.time?.toDate();
+const now = new Date();
+const hoursPassed = postedTime
+  ? (now - postedTime) / (1000 * 60 * 60)
+  : 0;
 
-        if (data.claimed) {
-          li.innerHTML = `
-            <b>${data.food}</b><br>
-            📍 ${data.location}<br>
-            📏 ${data.distance} km<br>
-            ✔ Claimed by: ${data.claimedBy}
-          `;
-        } else {
-          li.innerHTML = `
-            <b>${data.food}</b><br>
-            👤 Donor: ${data.donor}<br>
-            📍 ${data.location}<br>
-            📏 ${data.distance} km<br>
-            <a href="${data.mapLink}" target="_blank">📍 Open in Google Maps</a><br><br>
-            ${data.image ? `<img src="${data.image}" width="120"><br><br>` : ""}
-            <button onclick="claimFood('${doc.id}')">Claim</button>
-          `;
-        }
+const isExpired = hoursPassed >= 5;
+
+
+        if (isExpired) {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    <span style="color:red; font-weight:bold;">
+      ⏰ Time Expired
+    </span>
+  `;
+}
+
+else if (data.claimed) {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    ✔ Claimed by NGO: ${data.claimedBy}<br>
+    🚚 Distance: ${data.distance} km<br>
+    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}"
+       target="_blank">🗺 Open in Maps</a>
+  `;
+}
+
+else {
+  li.innerHTML = `
+    <b>${data.food}</b><br>
+    📍 ${data.location}<br>
+    by ${data.donor}<br>
+    ${data.image ? `<img src="${data.image}" width="120"><br>` : ""}
+    <button onclick="claimFood(this, '${data.location}', '${doc.id}')">
+      Claim
+    </button>
+  `;
+}
+
 
         list.appendChild(li);
       });
