@@ -88,7 +88,7 @@ window.postFood = function () {
   let firstLoad = true;
 
   db.collection("foods")
-    .orderBy("time", "desc")
+    .orderBy("postedAt", "desc")
     .onSnapshot(snapshot => {
 
       const list = document.getElementById("foodList");
@@ -108,11 +108,8 @@ window.postFood = function () {
 // STEP 2️⃣ — Expiry calculation (safe)
 let isExpired = false;
 
-if (data.time) {
-  const postedTime = data.time.toDate();
-  const now = new Date();
-  const hoursPassed = (now - postedTime) / (1000 * 60 * 60);
-  isExpired = hoursPassed >= 5;
+if (data.expiresAt) {
+  isExpired = Date.now() > data.expiresAt;
 }
 
 
@@ -158,18 +155,21 @@ else {
     });
 
   // ---------------- CLAIM FOOD ----------------
-  window.claimFood = function (docId) {
-    const ngoName = document.getElementById("ngoName").value;
+  window.claimFood = function (button, location, docId) {
+  const ngoName = document.getElementById("ngoName").value;
 
-    if (!ngoName) {
-      alert("Please enter NGO name first");
-      return;
-    }
+  if (!ngoName) {
+    alert("Please enter NGO name first");
+    return;
+  }
 
-    db.collection("foods").doc(docId).update({
-      claimed: true,
-      claimedBy: ngoName
-    });
-  };
+  const distance = (Math.random() * 8 + 1).toFixed(1);
+
+  db.collection("foods").doc(docId).update({
+    claimed: true,
+    claimedBy: ngoName,
+    distance: distance
+  });
+};
 
 });
