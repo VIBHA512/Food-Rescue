@@ -104,14 +104,17 @@ window.postFood = function () {
       snapshot.forEach(doc => {
         const data = doc.data();
         const li = document.createElement("li");
-        // STEP 2️⃣ — Expiry calculation (5 hours)
-const postedTime = data.time?.toDate();
-const now = new Date();
-const hoursPassed = postedTime
-  ? (now - postedTime) / (1000 * 60 * 60)
-  : 0;
+      
+// STEP 2️⃣ — Expiry calculation (safe)
+let isExpired = false;
 
-const isExpired = hoursPassed >= 5;
+if (data.time) {
+  const postedTime = data.time.toDate();
+  const now = new Date();
+  const hoursPassed = (now - postedTime) / (1000 * 60 * 60);
+  isExpired = hoursPassed >= 5;
+}
+
 
 
         if (isExpired) {
