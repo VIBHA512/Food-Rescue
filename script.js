@@ -73,45 +73,40 @@ window.postFood = function () {
 }
 
 // ---------------- NGO VIEW ----------------
+let firstLoad = true;
+
 db.collection("foods").orderBy("time", "desc")
   .onSnapshot(snapshot => {
+
     const list = document.getElementById("foodList");
+    const alertBox = document.getElementById("alertBox");
+
     list.innerHTML = "";
+
+    if (!firstLoad) {
+      alertBox.style.display = "block";
+
+      setTimeout(() => {
+        alertBox.style.display = "none";
+      }, 4000);
+    }
 
     snapshot.forEach(doc => {
       const data = doc.data();
       const li = document.createElement("li");
-      
-if (data.claimed) {
 
-  const mapUrl =
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}`;
-
-  li.innerHTML = `
-    <b>${data.food}</b><br>
-    📍 ${data.location}<br>
-    by ${data.donor}<br>
-
-    <span style="color: green; font-weight: bold;">
-      ✔ Claimed by NGO: ${data.claimedBy}
-    </span><br>
-
-    📏 Estimated Distance: <b>${data.distance} km</b><br><br>
-
-    <a href="${mapUrl}" target="_blank">
-      🗺 Open Location in Google Maps
-    </a>
-  `;
-}
-
-
-
-      else {
+      if (data.claimed) {
+        li.innerHTML = `
+          <b>${data.food}</b><br>
+          📍 ${data.location}<br>
+          ✔ Claimed by NGO: ${data.claimedBy}
+        `;
+      } else {
         li.innerHTML = `
           <b>${data.food}</b><br>
           📍 ${data.location}<br>
           by ${data.donor}<br>
-          ${data.image ? `<img src="${data.image}" width="150"><br>` : ""}
+          ${data.image ? `<img src="${data.image}" width="120"><br>` : ""}
           <button onclick="claimFood(this, '${data.location}', '${doc.id}')">
             Claim
           </button>
@@ -120,7 +115,11 @@ if (data.claimed) {
 
       list.appendChild(li);
     });
+
+    firstLoad = false;
   });
+
+
 
 // ---------------- CLAIM FOOD ----------------
 window.claimFood = function (button, destination, docId) {
