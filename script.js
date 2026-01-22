@@ -44,6 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ngoSection").style.display = "block";
   };
 
+  // ---------------- TIME HELPERS ----------------
+  function getRemainingTime(expiresAt) {
+    const diff = expiresAt - Date.now();
+
+    if (diff <= 0) return "Expired";
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${hours}h ${minutes}m`;
+  }
+
   // ---------------- POST FOOD ----------------
   window.postFood = function () {
     const name = document.getElementById("donorName").value;
@@ -56,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const now = Date.now();
-    const expiresAt = now + 5 * 60 * 60 * 1000; // 5 hours
+    const expiresAt = now + (5 * 60 * 60 * 1000); // 5 hours
 
     db.collection("foods").add({
       donor: name,
@@ -98,8 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = doc.data();
         const li = document.createElement("li");
 
-        const isExpired = data.expiresAt && Date.now() > data.expiresAt;
+        let timeLeft = "Unknown";
+        let isExpired = false;
 
+        if (data.expiresAt) {
+          timeLeft = getRemainingTime(data.expiresAt);
+          isExpired = timeLeft === "Expired";
+        }
+
+        // 🟥 EXPIRED
         if (isExpired) {
           li.innerHTML = `
             <b>${data.food}</b><br>
@@ -110,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
         }
 
+        // 🟩 CLAIMED
         else if (data.claimed) {
           li.innerHTML = `
             <b>${data.food}</b><br>
@@ -121,15 +141,17 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
         }
 
+        // 🟨 AVAILABLE
         else {
           li.innerHTML = `
             <b>${data.food}</b><br>
             📍 ${data.location}<br>
             by ${data.donor}<br>
+            <span style="color:orange; font-weight:bold;">
+              ⏳ Expires in: ${timeLeft}
+            </span><br>
             ${data.image ? `<img src="${data.image}" width="120"><br>` : ""}
-            <button onclick="claimFood('${doc.id}', '${data.location}')">
-              Claim
-            </button>
+            <button onclick="claimFood('${doc.id}')">Claim</button>
           `;
         }
 
@@ -140,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // ---------------- CLAIM FOOD ----------------
-  window.claimFood = function (docId, location) {
+  window.claimFood = function (docId) {
     const ngoName = document.getElementById("ngoName").value;
 
     if (!ngoName) {
