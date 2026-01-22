@@ -119,3 +119,57 @@ img {
   }
 }
 
+/* ---------- POLISH ---------- */
+
+/* Page spacing */
+.container {
+  padding: 30px 20px;
+}
+
+/* Section headings */
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 8px;
+}
+
+/* Inputs spacing */
+input {
+  margin-bottom: 12px;
+}
+
+/* Primary buttons */
+.card button {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Food card polish */
+li {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Image polish */
+li img {
+  display: block;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #777;
+  font-size: 14px;
+}
+
