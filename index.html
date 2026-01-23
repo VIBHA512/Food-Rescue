@@ -17,33 +17,42 @@
   </div>
 
   <!-- DONOR SECTION -->
-  <div id="donorSection" class="card">
-    <h2>Donor Form</h2>
+<div id="donorSection" class="card">
+  <h2>Donor Details</h2>
 
-    <input id="donorName" placeholder="Donor Name"><br><br>
-    <input id="foodDetails" placeholder="Food Details"><br><br>
-    <input id="location" placeholder="Location (eg: Connaught Place, Delhi)"><br><br>
+  <input id="donorName" placeholder="Donor Name" />
+  <input id="donorType" placeholder="Donor Type (Hotel / Wedding / Hostel)" />
+  <input id="donorPhone" placeholder="Mobile Number" />
+  <input id="donorEmail" placeholder="Email ID" />
 
-    <input type="file" id="foodImage" accept="image/*"><br><br>
-    <img id="preview" width="200" style="display:none; border-radius:10px;"><br><br>
+  <h3>Food Details</h3>
+  <input id="foodDetails" placeholder="Food Description" />
+  <input id="foodQuantity" placeholder="Quantity (e.g. serves 50 people)" />
+  <input id="foodType" placeholder="Veg / Non-Veg" />
+  <input id="pickupTime" placeholder="Pickup Time Window" />
+  <input id="location" placeholder="Pickup Location" />
 
-    <button onclick="postFood()">Post Food</button>
-  </div>
+  <input type="file" id="foodImage" accept="image/*" />
+  <img id="preview" width="150" style="display:none;" />
+
+  <button onclick="postFood()">Post Food</button>
+</div>
 
   <!-- NGO SECTION -->
-  <div id="ngoSection" class="card" style="display:none;">
-    <h2>NGO Dashboard</h2>
-    <input id="ngoName" placeholder="NGO Name"><br><br>
-<span style="color:#999;">⏳ Fresh food (time-sensitive)</span>
+ <div id="ngoSection" class="card" style="display:none;">
+  <h2>NGO Details</h2>
 
-    <div id="alertBox" class="alert" style="display:none;">
-      🚨 New food just posted nearby!
-    </div>
+  <input id="ngoName" placeholder="NGO Name" />
+  <input id="ngoPhone" placeholder="NGO Contact Number" />
+  <input id="ngoEmail" placeholder="NGO Email" />
+  <input id="ngoType" placeholder="NGO Type (Orphanage / Shelter)" />
 
-    <ul id="foodList"></ul>
-  </div>
+  <div id="alertBox" style="display:none;">🚨 New food posted nearby!</div>
 
+  <h3>Available Food</h3>
+  <ul id="foodList"></ul>
 </div>
+
 
 <footer>
   Prototype MVP • Built for Hackathon
