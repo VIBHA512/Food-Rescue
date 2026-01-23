@@ -208,5 +208,20 @@ button:hover {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
+h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #1f2937;
+}
+
+h3 {
+  margin-top: 28px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #111827;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
+}
+
 
 
