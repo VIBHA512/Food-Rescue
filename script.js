@@ -72,38 +72,44 @@ window.postFood = function () {
 
 
   // ---------------- NGO VIEW ----------------
-  db.collection("foods").orderBy("time", "desc")
-    .onSnapshot(snapshot => {
-      foodList.innerHTML = "";
+db.collection("foods")
+  .orderBy("postedAt", "desc")
+  .onSnapshot(snapshot => {
+    foodList.innerHTML = "";
 
-      snapshot.forEach(doc => {
-        const d = doc.data();
-        const li = document.createElement("li");
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const li = document.createElement("li");
 
-        if (d.claimed) {
-          li.innerHTML = `
-            <b>${d.food}</b><br>
-            📍 ${d.location}<br>
-            ✔ Claimed by ${d.claimedBy}<br>
-            🚚 Distance: ${d.distance} km
-          `;
-        } else {
-          li.innerHTML = `
-            <b>${d.food}</b><br>
-            👥 ${d.quantity}<br>
-            🕒 ${d.pickupTime}<br>
-            📍 ${d.location}<br>
-            🏢 ${d.donorType}<br>
-            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}"
-              target="_blank">🗺 Open Maps</a><br><br>
-            <button onclick="claimFood('${doc.id}')">Claim</button>
-          `;
-        }
+      const mapLink = `
+        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}"
+           target="_blank">🗺 Open Maps</a>
+      `;
 
-        foodList.appendChild(li);
-      });
+      if (d.claimed) {
+        li.innerHTML = `
+          <b>${d.food}</b><br>
+          📍 ${d.location}<br>
+          ✔ Claimed by ${d.claimedBy}<br>
+          🚚 Distance: ${d.distance} km<br>
+          ${mapLink}
+        `;
+      } else {
+        li.innerHTML = `
+          <b>${d.food}</b><br>
+          👥 ${d.quantity}<br>
+          ⏰ Pickup: ${d.pickupTime}<br>
+          📍 ${d.location}<br>
+          ${mapLink}<br><br>
+          <button onclick="claimFood('${doc.id}')">Claim</button>
+        `;
+      }
+
+      foodList.appendChild(li);
     });
+  });
 
+      
   // ---------------- CLAIM FOOD ----------------
   window.claimFood = function (docId) {
     const ngo = ngoName.value;
