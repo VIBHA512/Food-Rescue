@@ -2,13 +2,12 @@ body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #f9f9f9, #e6f7ff);
-  min-height: 100vh;
 }
 
 .container {
   max-width: 900px;
   margin: auto;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
 h1 {
@@ -19,7 +18,11 @@ h1 {
 .subtitle {
   text-align: center;
   color: #555;
-  margin-bottom: 20px;
+}
+
+.divider {
+  margin: 16px 0;
+  opacity: 0.2;
 }
 
 .switch-buttons {
@@ -28,7 +31,7 @@ h1 {
 }
 
 .switch-buttons button {
-  background: #2ecc71;
+  background: #22c55e;
   border: none;
   color: white;
   padding: 10px 18px;
@@ -38,37 +41,70 @@ h1 {
   font-weight: bold;
 }
 
-.switch-buttons button:hover {
-  background: #27ae60;
-}
-
 .card {
   background: white;
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+}
+
+.card h2 {
+  margin-top: 0;
+  border-bottom: 2px solid #eef2f7;
+  padding-bottom: 8px;
+}
+
+h3 {
+  margin-top: 26px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 14px;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  margin: 8px 0;
+  margin-top: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
 button {
-  background: #3498db;
+  width: 100%;
+  margin-top: 18px;
+  background: #16a34a;
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #2980b9;
+  background: #15803d;
+}
+
+.upload-box {
+  display: block;
+  margin-top: 12px;
+  padding: 12px;
+  border: 2px dashed #3498db;
+  border-radius: 10px;
+  text-align: center;
+  color: #3498db;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  background: #ecf6ff;
+}
+
+#preview {
+  display: none;
+  width: 150px;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 ul {
@@ -77,185 +113,43 @@ ul {
 }
 
 li {
-  background: white;
-  border-left: 6px solid #2ecc71;
+  background: #ffffff;
+  padding: 14px;
   border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-}
-
-
-img {
-  border-radius: 10px;
-  margin-top: 8px;
-}
-
-.header {
-  background: #2ecc71;
-  padding: 20px;
-  text-align: center;
-  color: white;
-  border-radius: 0 0 25px 25px;
-}
-
-.header h1 {
-  margin: 0;
-  color: white;
-}
-#alertBox {
-  border-radius: 12px;
-  animation: slideDown 0.4s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ---------- POLISH ---------- */
-
-/* Page spacing */
-.container {
-  padding: 30px 20px;
-}
-
-/* Section headings */
-.card h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  color: #2c3e50;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 8px;
-}
-
-/* Inputs spacing */
-input {
-  margin-bottom: 12px;
-}
-
-/* Primary buttons */
-.card button {
-  width: 100%;
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-/* Food card polish */
-li {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border-left: 6px solid #22c55e;
+  transition: 0.2s;
 }
 
 li:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* Image polish */
 li img {
-  display: block;
   max-width: 100%;
-  margin-top: 10px;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 15px;
-  color: #777;
-  font-size: 14px;
-}
-.upload-box {
-  display: block;
-  padding: 12px;
-  border: 2px dashed #3498db;
   border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  color: #3498db;
-  font-weight: bold;
   margin-top: 10px;
-  transition: 0.3s;
 }
 
-.upload-box:hover {
-  background: #ecf6ff;
-}
-.divider {
-  margin: 16px 0;
-  opacity: 0.2;
-}
-.card {
-  padding: 20px;
-}
-button {
+#alertBox {
+  display: none;
+  background: #dcfce7;
+  color: #166534;
   padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-button:hover {
-  opacity: 0.9;
-}
-#foodList li {
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-h2 {
-  font-size: 22px;
-  margin-bottom: 12px;
-  color: #1f2937;
-}
-
-h3 {
-  margin-top: 28px;
-  margin-bottom: 12px;
-  font-size: 18px;
-  color: #111827;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 16px;
-}
-
-button {
-  border: none;
-  padding: 12px 18px;
   border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
+  margin-top: 10px;
 }
 
-#donorSection button {
-  background: #16a34a;
-  color: white;
-  font-size: 16px;
-  padding: 14px;
-  margin-top: 18px;
+.hint {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 6px;
 }
 
-#donorSection button:hover {
-  background: #15803d;
-}
-#foodList li {
-  list-style: none;
-  background: #ffffff;
-  padding: 14px 16px;
-  border-radius: 12px;
-  margin-bottom: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  border-left: 6px solid #22c55e;
-}
 footer {
   text-align: center;
   font-size: 12px;
   color: #6b7280;
   margin-top: 40px;
 }
-
-
