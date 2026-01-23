@@ -188,5 +188,25 @@ footer {
 .upload-box:hover {
   background: #ecf6ff;
 }
+.divider {
+  margin: 16px 0;
+  opacity: 0.2;
+}
+.card {
+  padding: 20px;
+}
+button {
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+#foodList li {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
 
 
