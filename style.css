@@ -223,5 +223,39 @@ h3 {
   padding-top: 16px;
 }
 
+button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#donorSection button {
+  background: #16a34a;
+  color: white;
+  font-size: 16px;
+  padding: 14px;
+  margin-top: 18px;
+}
+
+#donorSection button:hover {
+  background: #15803d;
+}
+#foodList li {
+  list-style: none;
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border-left: 6px solid #22c55e;
+}
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 40px;
+}
 
 
