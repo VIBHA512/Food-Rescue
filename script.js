@@ -1,6 +1,6 @@
-// 🔥 Firebase Config
 document.addEventListener("DOMContentLoaded", function () {
 
+  // 🔥 Firebase Config
   const firebaseConfig = {
     apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
     authDomain: "food-rescue-1cfc8.firebaseapp.com",
@@ -13,160 +13,98 @@ document.addEventListener("DOMContentLoaded", function () {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // ---------------- IMAGE HANDLING ----------------
+  // ---------------- IMAGE ----------------
   let imageData = "";
 
-  const foodImage = document.getElementById("foodImage");
-  if (foodImage) {
-    foodImage.addEventListener("change", function () {
-      const file = this.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function () {
-        imageData = reader.result;
-        const preview = document.getElementById("preview");
-        preview.src = imageData;
-        preview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    });
-  }
+  document.getElementById("foodImage").addEventListener("change", function () {
+    const reader = new FileReader();
+    reader.onload = () => {
+      imageData = reader.result;
+      document.getElementById("preview").src = imageData;
+      document.getElementById("preview").style.display = "block";
+    };
+    reader.readAsDataURL(this.files[0]);
+  });
 
   // ---------------- VIEW SWITCH ----------------
-  window.showDonor = function () {
-    document.getElementById("donorSection").style.display = "block";
-    document.getElementById("ngoSection").style.display = "none";
+  window.showDonor = () => {
+    donorSection.style.display = "block";
+    ngoSection.style.display = "none";
   };
 
-  window.showNGO = function () {
-    document.getElementById("donorSection").style.display = "none";
-    document.getElementById("ngoSection").style.display = "block";
+  window.showNGO = () => {
+    donorSection.style.display = "none";
+    ngoSection.style.display = "block";
   };
-
-  // ---------------- TIME HELPERS ----------------
-  function getRemainingTime(expiresAt) {
-    const diff = expiresAt - Date.now();
-
-    if (diff <= 0) return "Expired";
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-    return `${hours}h ${minutes}m`;
-  }
 
   // ---------------- POST FOOD ----------------
   window.postFood = function () {
-    const name = document.getElementById("donorName").value;
-    const food = document.getElementById("foodDetails").value;
-    const location = document.getElementById("location").value;
+    const data = {
+      donorName: donorName.value,
+      donorType: donorType.value,
+      donorPhone: donorPhone.value,
+      donorEmail: donorEmail.value,
+      food: foodDetails.value,
+      quantity: foodQuantity.value,
+      foodType: foodType.value,
+      pickupTime: pickupTime.value,
+      location: location.value,
+      image: imageData,
+      claimed: false,
+      time: firebase.firestore.FieldValue.serverTimestamp()
+    };
 
-    if (!name || !food || !location) {
-      alert("Please fill all fields");
+    if (!data.donorName || !data.food || !data.location) {
+      alert("Please fill required fields");
       return;
     }
 
-    const now = Date.now();
-    const expiresAt = now + (5 * 60 * 60 * 1000); // 5 hours
+    db.collection("foods").add(data);
+    alert("Food posted successfully!");
 
-    db.collection("foods").add({
-      donor: name,
-      food: food,
-      location: location,
-      image: imageData,
-      claimed: false,
-      postedAt: now,
-      expiresAt: expiresAt
-    });
-
-    alert("Food posted! Valid for 5 hours ⏳");
-
-    document.getElementById("donorName").value = "";
-    document.getElementById("foodDetails").value = "";
-    document.getElementById("location").value = "";
-    document.getElementById("preview").style.display = "none";
+    document.querySelectorAll("input").forEach(i => i.value = "");
+    preview.style.display = "none";
     imageData = "";
   };
 
   // ---------------- NGO VIEW ----------------
-  let firstLoad = true;
-
-  db.collection("foods")
-    .orderBy("postedAt", "desc")
+  db.collection("foods").orderBy("time", "desc")
     .onSnapshot(snapshot => {
-
-      const list = document.getElementById("foodList");
-      const alertBox = document.getElementById("alertBox");
-
-      list.innerHTML = "";
-
-      if (!firstLoad && alertBox) {
-        alertBox.style.display = "block";
-        setTimeout(() => alertBox.style.display = "none", 4000);
-      }
+      foodList.innerHTML = "";
 
       snapshot.forEach(doc => {
-        const data = doc.data();
+        const d = doc.data();
         const li = document.createElement("li");
 
-        let timeLeft = "Unknown";
-        let isExpired = false;
-
-        if (data.expiresAt) {
-          timeLeft = getRemainingTime(data.expiresAt);
-          isExpired = timeLeft === "Expired";
-        }
-
-        // 🟥 EXPIRED
-        if (isExpired) {
+        if (d.claimed) {
           li.innerHTML = `
-            <b>${data.food}</b><br>
-            📍 ${data.location}<br>
-            <span style="color:red; font-weight:bold;">
-              ⏰ Time Expired
-            </span>
+            <b>${d.food}</b><br>
+            📍 ${d.location}<br>
+            ✔ Claimed by ${d.claimedBy}<br>
+            🚚 Distance: ${d.distance} km
           `;
-        }
-
-        // 🟩 CLAIMED
-        else if (data.claimed) {
+        } else {
           li.innerHTML = `
-            <b>${data.food}</b><br>
-            📍 ${data.location}<br>
-            ✔ Claimed by NGO: ${data.claimedBy}<br>
-            🚚 Distance: ${data.distance} km<br>
-            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}"
-               target="_blank">🗺 Open in Maps</a>
-          `;
-        }
-
-        // 🟨 AVAILABLE
-        else {
-          li.innerHTML = `
-            <b>${data.food}</b><br>
-            📍 ${data.location}<br>
-            by ${data.donor}<br>
-            <span style="color:orange; font-weight:bold;">
-              ⏳ Expires in: ${timeLeft}
-            </span><br>
-            ${data.image ? `<img src="${data.image}" width="120"><br>` : ""}
+            <b>${d.food}</b><br>
+            👥 ${d.quantity}<br>
+            🕒 ${d.pickupTime}<br>
+            📍 ${d.location}<br>
+            🏢 ${d.donorType}<br>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}"
+              target="_blank">🗺 Open Maps</a><br><br>
             <button onclick="claimFood('${doc.id}')">Claim</button>
           `;
         }
 
-        list.appendChild(li);
+        foodList.appendChild(li);
       });
-
-      firstLoad = false;
     });
 
   // ---------------- CLAIM FOOD ----------------
   window.claimFood = function (docId) {
-    const ngoName = document.getElementById("ngoName").value;
-
-    if (!ngoName) {
-      alert("Please enter NGO name first");
+    const ngo = ngoName.value;
+    if (!ngo) {
+      alert("Enter NGO Name first");
       return;
     }
 
@@ -174,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     db.collection("foods").doc(docId).update({
       claimed: true,
-      claimedBy: ngoName,
+      claimedBy: ngo,
       distance: distance
     });
   };
