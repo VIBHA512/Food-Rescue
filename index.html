@@ -34,8 +34,14 @@
   <input id="pickupTime" placeholder="Pickup Time" />
   <input id="location" placeholder="Pickup Location" />
 
-  <input type="file" id="foodImage" accept="image/*" />
-  <img id="preview" style="display:none; width:150px;" />
+  <label for="foodImage" class="upload-box">
+  Enter your food image here
+</label>
+
+<input type="file" id="foodImage" accept="image/*" hidden />
+
+<img id="preview" style="display:none; width:150px; margin-top:10px; border-radius:10px;" />
+
 
   <button onclick="postFood()">Post Food</button>
 </div>
