@@ -38,34 +38,38 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // ---------------- POST FOOD ----------------
-  window.postFood = function () {
-    const data = {
-      donorName: donorName.value,
-      donorType: donorType.value,
-      donorPhone: donorPhone.value,
-      donorEmail: donorEmail.value,
-      food: foodDetails.value,
-      quantity: foodQuantity.value,
-      foodType: foodType.value,
-      pickupTime: pickupTime.value,
-      location: location.value,
-      image: imageData,
-      claimed: false,
-      time: firebase.firestore.FieldValue.serverTimestamp()
-    };
+window.postFood = function () {
+  const donorNameVal = document.getElementById("donorName")?.value.trim();
+  const foodVal = document.getElementById("foodDetails")?.value.trim();
+  const locationVal = document.getElementById("location")?.value.trim();
 
-    if (!data.donorName || !data.food || !data.location) {
-      alert("Please fill required fields");
-      return;
-    }
+  if (!donorNameVal || !foodVal || !locationVal) {
+    alert("Please fill Donor Name, Food Details & Location");
+    return;
+  }
 
-    db.collection("foods").add(data);
-    alert("Food posted successfully!");
+  db.collection("foods").add({
+    donorName: donorNameVal,
+    donorType: donorType.value,
+    donorPhone: donorPhone.value,
+    donorEmail: donorEmail.value,
+    food: foodVal,
+    quantity: foodQuantity.value,
+    foodType: foodType.value,
+    pickupTime: pickupTime.value,
+    location: locationVal,
+    image: imageData,
+    claimed: false,
+    time: firebase.firestore.FieldValue.serverTimestamp()
+  });
 
-    document.querySelectorAll("input").forEach(i => i.value = "");
-    preview.style.display = "none";
-    imageData = "";
-  };
+  alert("Food posted successfully 🎉");
+
+  document.querySelectorAll("#donorSection input").forEach(i => i.value = "");
+  preview.style.display = "none";
+  imageData = "";
+};
+
 
   // ---------------- NGO VIEW ----------------
   db.collection("foods").orderBy("time", "desc")
