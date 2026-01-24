@@ -1,66 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meal For All</title>
-
-  <link rel="stylesheet" href="style.css"/>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    body { font-family: Arial; background:#f4f6f8; }
+    .box { background:#fff; padding:15px; margin:15px auto; width:380px; border-radius:10px; }
+    button { margin-top:8px; padding:6px 12px; }
+    img { border-radius:8px; margin-top:6px; }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>🍽 Meal For All</h1>
-    <p class="subtitle">Reducing food waste • Feeding communities</p>
 
-    <div class="switch-buttons">
-      <button onclick="showDonor()">Donor View</button>
-      <button onclick="showNGO()">NGO View</button>
-    </div>
+<div class="box">
+  <h2>🍽 Meal For All</h2>
+  <button onclick="showDonor()">Donor View</button>
+  <button onclick="showNGO()">NGO View</button>
+</div>
 
-    <!-- DONOR -->
-    <div id="donorSection" class="card">
-      <h2>Donor Details</h2>
+<!-- DONOR -->
+<div id="donorSection" class="box">
+  <h3>Donor Details</h3>
 
-      <input id="donorName" placeholder="Donor Name">
-      <input id="donorType" placeholder="Hotel / Wedding">
-      <input id="donorPhone" placeholder="Phone Number">
-      <input id="donorEmail" placeholder="Email">
+  <input id="donorName" placeholder="Donor Name"><br>
+  <input id="donorType" placeholder="Wedding / Hotel"><br>
+  <input id="donorPhone" placeholder="Phone"><br>
+  <input id="donorEmail" placeholder="Email"><br>
 
-      <h3>Food Details</h3>
-      <input id="foodDetails" placeholder="Food Description">
-      <input id="foodQuantity" placeholder="Quantity (serves people)">
-      <input id="foodType" placeholder="Veg / Non-Veg">
-      <input id="pickupTime" placeholder="Pickup Time">
-      <input id="location" placeholder="Pickup Location">
+  <h3>Food Details</h3>
+  <input id="foodDetails" placeholder="Food name"><br>
+  <input id="foodQuantity" placeholder="Quantity"><br>
+  <input id="foodType" placeholder="Veg / Non-veg"><br>
+  <input id="pickupTime" placeholder="Pickup Time"><br>
+  <input id="location" placeholder="Location"><br>
 
-      <!-- IMAGE -->
-      <input type="file" id="foodImage" accept="image/*">
-      <img id="preview" style="display:none; width:150px; margin-top:10px; border-radius:10px;">
+  <input type="file" id="foodImage"><br>
+  <img id="preview" style="display:none" width="140">
 
-      <button onclick="postFood()">Post Food</button>
-    </div>
+  <br>
+  <button onclick="postFood()">Post Food</button>
+</div>
 
-    <!-- NGO -->
-    <div id="ngoSection" class="card" style="display:none;">
-      <h2>NGO Details</h2>
+<!-- NGO -->
+<div id="ngoSection" class="box" style="display:none">
+  <h3>NGO Details</h3>
 
-      <input id="ngoName" placeholder="NGO Name">
-      <input id="ngoPhone" placeholder="NGO Phone">
-      <input id="ngoEmail" placeholder="NGO Email">
-      <input id="ngoType" placeholder="Orphanage / Shelter">
+  <input id="ngoName" placeholder="NGO Name"><br>
+  <input id="ngoPhone" placeholder="NGO Phone"><br>
+  <input id="ngoEmail" placeholder="NGO Email"><br>
 
-      <h3>Available Food</h3>
-      <ul id="foodList"></ul>
-    </div>
+  <h3>Available Food</h3>
+  <ul id="foodList"></ul>
+</div>
 
-    <footer>Hackathon MVP • Meal For All</footer>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
