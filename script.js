@@ -4,15 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
     apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
     authDomain: "food-rescue-1cfc8.firebaseapp.com",
     projectId: "food-rescue-1cfc8",
-    storageBucket: "food-rescue-1cfc8.appspot.com",
-    messagingSenderId: "571196450384",
-    appId: "1:571196450384:web:5b316891a8a4e65bd79355"
   };
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
   let imageData = "";
+
   const foodImage = document.getElementById("foodImage");
   const preview = document.getElementById("preview");
 
@@ -29,11 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
   window.showDonor = () => {
     donorSection.classList.remove("hidden");
     ngoSection.classList.add("hidden");
+    donorBtn.classList.add("active");
+    ngoBtn.classList.remove("active");
   };
 
   window.showNGO = () => {
     donorSection.classList.add("hidden");
     ngoSection.classList.remove("hidden");
+    ngoBtn.classList.add("active");
+    donorBtn.classList.remove("active");
   };
 
   window.postFood = () => {
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       postedAt: Date.now()
     });
 
-    alert("Food Posted Successfully 🎉");
+    alert("Food posted successfully 🎉");
     document.querySelectorAll("input").forEach(i => i.value = "");
     preview.style.display = "none";
     imageData = "";
@@ -70,20 +72,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const d = doc.data();
         if (d.claimed) return;
 
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <b>${d.food}</b><br>
-          🍱 ${d.foodType}<br>
-          👥 ${d.quantity}<br>
-          ⏰ ${d.pickupTime}<br>
-          📍 ${d.location}<br>
-          ${d.image ? `<img src="${d.image}">` : ""}
-          <br>
-          <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}">📍 Open Map</a>
-          <br>
-          <button onclick="claimFood('${doc.id}')">Claim</button>
+        const card = document.createElement("div");
+        card.className = "food-card";
+
+        card.innerHTML = `
+          <b>${d.food}</b><br/>
+          🥗 ${d.foodType}<br/>
+          👥 Serves ${d.quantity}<br/>
+          ⏰ ${d.pickupTime}<br/>
+          📍 ${d.location}<br/>
+          👤 Donor: ${d.donorName}
+          ${d.image ? `<br/><img src="${d.image}"/>` : ""}
+          <div class="food-actions">
+            <button class="claim" onclick="claimFood('${doc.id}')">Claim Food</button>
+            <a class="map" target="_blank"
+              href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}">
+              Maps
+            </a>
+          </div>
         `;
-        foodList.appendChild(li);
+
+        foodList.appendChild(card);
       });
     });
 
