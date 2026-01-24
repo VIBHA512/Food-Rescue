@@ -2,108 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meal For All</title>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <!-- Basic styling (simple + safe) -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .box {
-      background: #ffffff;
-      padding: 18px;
-      margin: 20px auto;
-      width: 380px;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
-
-    h2, h3 {
-      margin-top: 0;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 6px;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 8px 14px;
-      cursor: pointer;
-    }
-
-    img {
-      border-radius: 8px;
-      margin-top: 8px;
-    }
-
-    ul {
-      padding-left: 18px;
-    }
-
-    li {
-      margin-bottom: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- HEADER / SWITCH -->
-  <div class="box">
-    <h2>🍽 Meal For All</h2>
+<div class="container">
+
+  <h1>Meal For All</h1>
+  <p class="subtitle">Reducing food waste • Feeding communities</p>
+  <hr class="divider">
+
+  <div class="switch-buttons">
     <button onclick="showDonor()">Donor View</button>
     <button onclick="showNGO()">NGO View</button>
   </div>
 
   <!-- ================= DONOR SECTION ================= -->
-  <div id="donorSection" class="box">
-    <h3>Donor Details</h3>
+  <div id="donorSection" class="card">
+
+    <h2>Donor Details</h2>
 
     <input id="donorName" placeholder="Donor Name" />
-    <input id="donorType" placeholder="Wedding / Hotel" />
-    <input id="donorPhone" placeholder="Phone" />
-    <input id="donorEmail" placeholder="Email" />
+    <input id="donorType" placeholder="Donor Type (Hotel / Wedding / Event)" />
+    <input id="donorPhone" placeholder="Mobile Number" />
+    <input id="donorEmail" placeholder="Email ID" />
 
     <h3>Food Details</h3>
 
-    <input id="foodDetails" placeholder="Food name" />
-    <input id="foodQuantity" placeholder="Quantity" />
-    <input id="foodType" placeholder="Veg / Non-veg" />
-    <input id="pickupTime" placeholder="Pickup Time" />
-    <input id="location" placeholder="Location" />
+    <input id="foodDetails" placeholder="Food Description (e.g. Veg Thali)" />
+    <input id="foodQuantity" placeholder="Quantity (e.g. serves 100 people)" />
+    <input id="foodType" placeholder="Veg / Non-Veg" />
+    <input id="pickupTime" placeholder="Pickup Time (next 4–5 hours preferred)" />
+    <input id="location" placeholder="Pickup Location" />
 
-    <input type="file" id="foodImage" />
-    <img id="preview" style="display:none;" width="140" />
+    <small class="hint">
+      ℹ️ NGOs nearby will be notified instantly after posting
+    </small>
 
-    <button onclick="postFood()">Post Food</button>
+    <label for="foodImage" class="upload-box">
+      📸 Enter your food image here
+    </label>
+    <input type="file" id="foodImage" accept="image/*" hidden />
+    <img id="preview" />
+
+    <button onclick="postFood()">Notify Nearby NGOs</button>
   </div>
 
   <!-- ================= NGO SECTION ================= -->
-  <div id="ngoSection" class="box" style="display:none;">
-    <h3>NGO Details</h3>
+  <div id="ngoSection" class="card" style="display:none;">
+
+    <h2>NGO Details</h2>
 
     <input id="ngoName" placeholder="NGO Name" />
-    <input id="ngoPhone" placeholder="NGO Phone" />
-    <input id="ngoEmail" placeholder="NGO Email" />
+    <input id="ngoPhone" placeholder="Contact Number" />
+    <input id="ngoEmail" placeholder="Email ID" />
+    <input id="ngoType" placeholder="NGO Type (Orphanage / Shelter)" />
+
+    <div id="alertBox">🚨 New food posted nearby!</div>
 
     <h3>Available Food</h3>
+    <p class="hint">
+      Claim food to reserve pickup and view location
+    </p>
+
     <ul id="foodList"></ul>
   </div>
 
-  <!-- JS -->
-  <script src="./script.js"></script>
+  <footer>
+    Prototype MVP • Built for Hackathon
+  </footer>
+
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="script.js"></script>
 </body>
 </html>
