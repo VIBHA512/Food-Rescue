@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meal For All</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
@@ -16,76 +18,66 @@
 
 <body>
 
-  <div class="container">
+<header>
+  <h1>🍽 Meal For All</h1>
+  <p>Reducing food waste • Feeding communities</p>
+</header>
 
-    <h1>Meal For All</h1>
-    <p class="subtitle">Reducing food waste • Feeding communities</p>
-    <hr class="divider" />
+<div class="view-toggle">
+  <button onclick="showDonor()">Donor</button>
+  <button onclick="showNGO()">NGO</button>
+</div>
 
-    <!-- VIEW SWITCH -->
-    <div class="switch-buttons">
-      <button onclick="showDonor()">Donor View</button>
-      <button onclick="showNGO()">NGO View</button>
-    </div>
+<!-- ================= DONOR VIEW ================= -->
+<section id="donorSection" class="card">
+  <h2>Donor Details</h2>
 
-    <!-- ================= DONOR SECTION ================= -->
-    <div id="donorSection" class="card">
-
-      <h2>Donor Details</h2>
-
-      <input id="donorName" placeholder="Donor Name" />
-      <input id="donorType" placeholder="Donor Type (Hotel / Wedding)" />
-      <input id="donorPhone" placeholder="Mobile Number" />
-      <input id="donorEmail" placeholder="Email ID" />
-
-      <h3>Food Details</h3>
-
-      <input id="foodDetails" placeholder="Food Description" />
-      <input id="foodQuantity" placeholder="Quantity (serves approx people)" />
-      <input id="foodType" placeholder="Veg / Non-Veg" />
-      <input id="pickupTime" placeholder="Pickup Time" />
-      <input id="location" placeholder="Pickup Location" />
-
-      <!-- IMAGE UPLOAD -->
-      <label for="foodImage" class="upload-box">
-        📷 Enter your food image here
-      </label>
-      <input type="file" id="foodImage" accept="image/*" hidden />
-
-      <img id="preview"
-           style="display:none; width:150px; margin-top:10px; border-radius:10px;" />
-
-      <button onclick="postFood()">Post Food for Donation</button>
-
-    </div>
-
-    <!-- ================= NGO SECTION ================= -->
-    <div id="ngoSection" class="card" style="display:none;">
-
-      <h2>NGO Details</h2>
-
-      <input id="ngoName" placeholder="NGO Name" />
-      <input id="ngoPhone" placeholder="NGO Contact Number" />
-      <input id="ngoEmail" placeholder="NGO Email" />
-      <input id="ngoType" placeholder="NGO Type (Orphanage / Shelter)" />
-
-      <div id="alertBox" style="display:none;">
-        🚨 New food posted nearby!
-      </div>
-
-      <h3>Available Food</h3>
-      <ul id="foodList"></ul>
-
-    </div>
-
-    <footer>
-      Prototype MVP • Built for Hackathon
-    </footer>
-
+  <div class="grid">
+    <input id="donorName" placeholder="Donor Name" />
+    <input id="donorType" placeholder="Hotel / Wedding / Home" />
+    <input id="donorPhone" placeholder="Mobile Number" />
+    <input id="donorEmail" placeholder="Email ID" />
   </div>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <h3>Food Details</h3>
 
+  <div class="grid">
+    <input id="foodDetails" placeholder="Food Description" />
+    <input id="foodQuantity" placeholder="Serves (approx people)" />
+    <input id="foodType" placeholder="Veg / Non-Veg" />
+    <input id="pickupTime" placeholder="Pickup Time" />
+    <input id="location" placeholder="Pickup Location" />
+  </div>
+
+  <label class="upload">
+    📷 Upload Food Image
+    <input type="file" id="foodImage" hidden />
+  </label>
+
+  <img id="preview"/>
+
+  <button class="primary" onclick="postFood()">Post Food</button>
+</section>
+
+<!-- ================= NGO VIEW ================= -->
+<section id="ngoSection" class="card hidden">
+  <h2>NGO Details</h2>
+
+  <div class="grid">
+    <input id="ngoName" placeholder="NGO Name" />
+    <input id="ngoPhone" placeholder="Contact Number" />
+    <input id="ngoEmail" placeholder="Email ID" />
+    <input id="ngoType" placeholder="Shelter / Orphanage" />
+  </div>
+
+  <h3>Available Food Nearby</h3>
+  <ul id="foodList"></ul>
+</section>
+
+<footer>
+  🚀 Hackathon Prototype • Meal For All
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
