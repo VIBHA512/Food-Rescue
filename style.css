@@ -193,3 +193,9 @@ footer {
   color: #6b7280;
   padding: 40px 10px;
 }
+.card h2 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+
