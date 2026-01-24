@@ -92,13 +92,16 @@ input {
 /* UPLOAD */
 .upload-box {
   border: 2px dashed #22c55e;
-  padding: 30px;
+  padding: 24px;
   border-radius: 16px;
   text-align: center;
   color: #15803d;
   cursor: pointer;
-  margin-top: 20px;
+  margin: 20px 0;
+  width: 100%;
 }
+
+
 
 .upload-box span {
   display: block;
