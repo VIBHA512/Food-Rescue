@@ -30,27 +30,36 @@
 </header>
 
 <!-- ============ DONOR VIEW ============ -->
-<div id="donorSection" class="card">
+<h2>👤 Donor Details</h2>
 
-  <h2>👤 Donor Details</h2>
+<div class="grid">
+  <input id="donorName" placeholder="Your Name">
+  <input id="donorType" placeholder="Type (Hotel / Restaurant / Wedding)">
+  <input id="donorPhone" placeholder="Mobile Number">
+  <input id="donorEmail" placeholder="Email Address">
+</div>
 
-  <div class="grid">
-    <input id="donorName" placeholder="Your Name" />
-    <input id="donorType" placeholder="Type (Hotel / Restaurant / Wedding)" />
-    <input id="donorPhone" placeholder="Mobile Number" />
-    <input id="donorEmail" placeholder="Email Address" />
-  </div>
+<h2>🍱 Food Details</h2>
 
-  <h2>🍱 Food Details</h2>
+<div class="grid">
+  <input id="foodDetails" placeholder="Food Description">
+  <input id="foodQuantity" placeholder="Quantity (serves approx people)">
+  <input id="foodType" placeholder="Veg / Non-Veg">
+  <input id="pickupTime" placeholder="Pickup Time">
+</div>
 
-  <div class="grid">
-    <input id="foodDetails" placeholder="Food Description (Rice, Curry, Bread)" />
-    <input id="foodQuantity" placeholder="Quantity (serves approx people)" />
-    <input id="foodType" placeholder="Veg / Non-Veg" />
-    <input id="pickupTime" placeholder="Pickup Time (e.g. 6:00 PM - 8:00 PM)" />
-  </div>
+<input id="location" class="full" placeholder="📍 Pickup Location (Full Address)">
 
-  <input id="location" placeholder="📍 Pickup Location (Full Address)" class="full" />
+<label class="upload-box">
+  ⬆ Upload Food Image
+  <span>Click or drag to upload</span>
+  <input type="file" id="foodImage" hidden>
+</label>
+
+<img id="preview">
+
+<button class="primary" onclick="postFood()">🚀 Post Food for Donation</button>
+
 
   <!-- Upload -->
   <label class="upload-box">
