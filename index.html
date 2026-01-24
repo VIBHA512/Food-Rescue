@@ -1,63 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meal For All</title>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
+  <!-- Basic styling (simple + safe) -->
   <style>
-    body { font-family: Arial; background:#f4f6f8; }
-    .box { background:#fff; padding:15px; margin:15px auto; width:380px; border-radius:10px; }
-    button { margin-top:8px; padding:6px 12px; }
-    img { border-radius:8px; margin-top:6px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .box {
+      background: #ffffff;
+      padding: 18px;
+      margin: 20px auto;
+      width: 380px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    h2, h3 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    img {
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>🍽 Meal For All</h2>
-  <button onclick="showDonor()">Donor View</button>
-  <button onclick="showNGO()">NGO View</button>
-</div>
+  <!-- HEADER / SWITCH -->
+  <div class="box">
+    <h2>🍽 Meal For All</h2>
+    <button onclick="showDonor()">Donor View</button>
+    <button onclick="showNGO()">NGO View</button>
+  </div>
 
-<!-- DONOR -->
-<div id="donorSection" class="box">
-  <h3>Donor Details</h3>
+  <!-- ================= DONOR SECTION ================= -->
+  <div id="donorSection" class="box">
+    <h3>Donor Details</h3>
 
-  <input id="donorName" placeholder="Donor Name"><br>
-  <input id="donorType" placeholder="Wedding / Hotel"><br>
-  <input id="donorPhone" placeholder="Phone"><br>
-  <input id="donorEmail" placeholder="Email"><br>
+    <input id="donorName" placeholder="Donor Name" />
+    <input id="donorType" placeholder="Wedding / Hotel" />
+    <input id="donorPhone" placeholder="Phone" />
+    <input id="donorEmail" placeholder="Email" />
 
-  <h3>Food Details</h3>
-  <input id="foodDetails" placeholder="Food name"><br>
-  <input id="foodQuantity" placeholder="Quantity"><br>
-  <input id="foodType" placeholder="Veg / Non-veg"><br>
-  <input id="pickupTime" placeholder="Pickup Time"><br>
-  <input id="location" placeholder="Location"><br>
+    <h3>Food Details</h3>
 
-  <input type="file" id="foodImage"><br>
-  <img id="preview" style="display:none" width="140">
+    <input id="foodDetails" placeholder="Food name" />
+    <input id="foodQuantity" placeholder="Quantity" />
+    <input id="foodType" placeholder="Veg / Non-veg" />
+    <input id="pickupTime" placeholder="Pickup Time" />
+    <input id="location" placeholder="Location" />
 
-  <br>
-  <button onclick="postFood()">Post Food</button>
-</div>
+    <input type="file" id="foodImage" />
+    <img id="preview" style="display:none;" width="140" />
 
-<!-- NGO -->
-<div id="ngoSection" class="box" style="display:none">
-  <h3>NGO Details</h3>
+    <button onclick="postFood()">Post Food</button>
+  </div>
 
-  <input id="ngoName" placeholder="NGO Name"><br>
-  <input id="ngoPhone" placeholder="NGO Phone"><br>
-  <input id="ngoEmail" placeholder="NGO Email"><br>
+  <!-- ================= NGO SECTION ================= -->
+  <div id="ngoSection" class="box" style="display:none;">
+    <h3>NGO Details</h3>
 
-  <h3>Available Food</h3>
-  <ul id="foodList"></ul>
-</div>
+    <input id="ngoName" placeholder="NGO Name" />
+    <input id="ngoPhone" placeholder="NGO Phone" />
+    <input id="ngoEmail" placeholder="NGO Email" />
 
-<script src="script.js"></script>
+    <h3>Available Food</h3>
+    <ul id="foodList"></ul>
+  </div>
+
+  <!-- JS -->
+  <script src="./script.js"></script>
 </body>
 </html>
