@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ================= FIREBASE INIT =================
+
+  /* ========== FIREBASE INIT ========== */
   const firebaseConfig = {
     apiKey: "AIzaSyCcTAdHdM_xxzrcT7JFFaPEvNEkwGGapG0",
     authDomain: "food-rescue-1cfc8.firebaseapp.com",
@@ -15,14 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const db = firebase.firestore();
 
-  // ================= IMAGE PREVIEW =================
+  /* ========== IMAGE UPLOAD PREVIEW ========== */
   let imageData = "";
   const foodImage = document.getElementById("foodImage");
   const preview = document.getElementById("preview");
 
   if (foodImage) {
-    foodImage.addEventListener("change", function () {
-      const file = this.files[0];
+    foodImage.addEventListener("change", () => {
+      const file = foodImage.files[0];
       if (!file) return;
 
       const reader = new FileReader();
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= VIEW SWITCH =================
+  /* ========== VIEW SWITCH ========== */
   window.showDonor = () => {
     document.getElementById("donorSection").style.display = "block";
     document.getElementById("ngoSection").style.display = "none";
@@ -46,28 +47,30 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ngoSection").style.display = "block";
   };
 
-  // ================= POST FOOD =================
+  /* ========== POST FOOD (DONOR) ========== */
   window.postFood = async () => {
     const donorName = document.getElementById("donorName").value.trim();
-    const foodDetails = document.getElementById("foodDetails").value.trim();
+    const food = document.getElementById("foodDetails").value.trim();
     const location = document.getElementById("location").value.trim();
 
-    if (!donorName || !foodDetails || !location) {
-      alert("Please fill Donor Name, Food Details & Location");
+    if (!donorName || !food || !location) {
+      alert("Please fill Donor Name, Food & Location");
       return;
     }
 
     await db.collection("foods").add({
-      donorName,
+      donorName: donorName,
       donorType: document.getElementById("donorType").value,
       donorPhone: document.getElementById("donorPhone").value,
       donorEmail: document.getElementById("donorEmail").value,
-      food: foodDetails,
+
+      food: food,
       quantity: document.getElementById("foodQuantity").value,
       foodType: document.getElementById("foodType").value,
       pickupTime: document.getElementById("pickupTime").value,
-      location,
-      image: imageData || "",
+      location: location,
+
+      image: imageData,
       claimed: false,
       postedAt: Date.now()
     });
@@ -75,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Food posted successfully 🎉");
 
     // Reset form
-    document.querySelectorAll("#donorSection input").forEach(input => {
-      if (input.type !== "file") input.value = "";
+    document.querySelectorAll("#donorSection input").forEach(i => {
+      if (i.type !== "file") i.value = "";
     });
 
     preview.style.display = "none";
@@ -84,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     imageData = "";
   };
 
-  // ================= NGO VIEW =================
+  /* ========== NGO VIEW LIST ========== */
   db.collection("foods")
     .orderBy("postedAt", "desc")
     .onSnapshot(snapshot => {
@@ -93,14 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       snapshot.forEach(doc => {
         const d = doc.data();
-        if (!d.food || !d.location) return;
-
         const li = document.createElement("li");
 
-        const mapLink =
-          `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-            d.location
-          )}" target="_blank">🗺 Open in Maps</a>`;
+        const mapLink = `
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}" target="_blank">
+            🗺 Open in Maps
+          </a>
+        `;
 
         if (d.claimed) {
           li.innerHTML = `
@@ -119,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             📍 ${d.location}<br>
             👤 Donor: ${d.donorName}<br>
             ${d.image ? `<img src="${d.image}" width="120">` : ""}
+            <br>
             <button onclick="claimFood('${doc.id}')">Claim</button>
             <br>${mapLink}
           `;
@@ -128,20 +131,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-  // ================= CLAIM FOOD =================
+  /* ========== CLAIM FOOD (NGO) ========== */
   window.claimFood = async (docId) => {
     const ngoName = document.getElementById("ngoName").value.trim();
+
     if (!ngoName) {
       alert("Please enter NGO Name first");
       return;
     }
 
-    const distance = (Math.random() * 8 + 1).toFixed(1);
+    const distance = (Math.random() * 10 + 1).toFixed(1);
 
     await db.collection("foods").doc(docId).update({
       claimed: true,
       claimedBy: ngoName,
-      distance
+      distance: distance
     });
+
+    alert("Food claimed successfully ✅");
   };
+
 });
