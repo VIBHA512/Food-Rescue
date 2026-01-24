@@ -1,216 +1,95 @@
 * {
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #f6fff9, #ffffff);
-  color: #1f2937;
+  font-family: "Segoe UI", sans-serif;
+  background: #f6fff9;
 }
 
-/* HERO */
-.hero {
-  text-align: center;
+.container {
+  max-width: 900px;
+  margin: auto;
   padding: 40px 20px;
 }
 
-.logo {
-  width: 70px;
-  margin-bottom: 10px;
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
 }
 
-.hero h1 {
-  margin: 5px 0;
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
 }
 
-.hero p {
-  color: #4b5563;
+/* Buttons */
+.switch-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
-/* TOGGLE */
-.toggle {
-  margin-top: 20px;
-}
-
-.toggle button {
-  padding: 10px 20px;
-  border-radius: 999px;
+.switch-buttons button {
+  padding: 10px 18px;
+  border-radius: 20px;
   border: none;
-  margin: 5px;
-  font-weight: 600;
   cursor: pointer;
-  background: #e5e7eb;
+  font-weight: 600;
 }
 
-.toggle .active {
+.switch-buttons button:first-child {
   background: #22c55e;
   color: white;
 }
 
-/* CARD */
+.switch-buttons button:last-child {
+  background: #e5e7eb;
+}
+
+/* Card */
 .card {
-  max-width: 900px;
-  margin: 30px auto;
   background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-.hidden {
-  display: none;
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-/* GRID */
+/* Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
   }
 }
 
+/* Inputs */
 input {
+  width: 100%;
   padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid #d1d5db;
   font-size: 14px;
-  width: 100%;
-}
-
-/* UPLOAD */
-.upload-box {
-  border: 2px dashed #22c55e;
-  padding: 24px;
-  border-radius: 16px;
-  text-align: center;
-  color: #15803d;
-  cursor: pointer;
-  margin: 20px 0;
-  width: 100%;
-}
-
-
-
-.upload-box span {
-  display: block;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-#preview {
-  display: none;
-  width: 160px;
-  margin-top: 15px;
-  border-radius: 14px;
-}
-
-/* BUTTON */
-.primary {
-  width: 100%;
-  margin-top: 20px;
-  padding: 14px;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  color: white;
-  border: none;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-
-/* ALERT */
-.alert {
-  background: #dcfce7;
-  color: #166534;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-/* FOOD CARDS */
-.food-list {
-  display: grid;
-  gap: 20px;
-}
-
-.food-card {
-  border-left: 6px solid #22c55e;
-  padding: 20px;
-  border-radius: 16px;
-  background: #f0fdf4;
-}
-
-.food-card img {
-  width: 120px;
-  border-radius: 12px;
-  margin-top: 10px;
-}
-
-.food-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.food-actions button,
-.food-actions a {
-  flex: 1;
-  padding: 10px;
-  border-radius: 12px;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.claim {
-  background: #22c55e;
-  color: white;
-}
-
-.map {
-  background: #e5fbe9;
-  color: #166534;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  font-size: 13px;
-  color: #6b7280;
-  padding: 40px 10px;
-}
-.card h2 {
-  margin-top: 24px;
-  margin-bottom: 12px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
 }
 
 .full {
   width: 100%;
-  margin-top: 16px;
+  margin: 16px 0;
 }
 
+/* Upload */
 .upload-box {
   border: 2px dashed #22c55e;
-  padding: 24px;
+  padding: 26px;
   border-radius: 16px;
   text-align: center;
   color: #15803d;
@@ -225,29 +104,23 @@ footer {
   margin-top: 6px;
 }
 
+/* Button */
 .primary {
   width: 100%;
   padding: 16px;
   background: linear-gradient(90deg, #22c55e, #16a34a);
   color: white;
   border: none;
-  border-radius: 16px;
+  border-radius: 18px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
 }
 
+/* Preview */
 #preview {
   display: none;
   max-width: 180px;
   border-radius: 12px;
   margin-bottom: 16px;
 }
-
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
